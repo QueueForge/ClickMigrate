@@ -7,7 +7,7 @@ Thank you for your interest in contributing to **ClickMigrate**! Contributions o
 Clone the repository and install the development dependencies:
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/ClickMigrate.git
+git clone https://github.com/queueforge/ClickMigrate.git
 cd ClickMigrate
 
 python -m venv .venv
