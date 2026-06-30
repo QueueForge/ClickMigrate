@@ -34,7 +34,7 @@ class MigrationManager:
 
     def _get_local_migrations(self) -> List[Migration]:
         """Discovers and parses local .sql migration files."""
-        migrations = []
+        migrations: List[Migration] = []
         if not os.path.exists(self.config.migration_directory):
             return migrations
 
