@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ClickMigrate"
+version = "1.0.0"
+description = "A modern, simple database migration framework for ClickHouse."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Ivo Theis", email = "ivo.theis@queueforge.dev" }]
+dependencies = [
+    "clickhouse-connect>=0.6.8",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pyyaml>=6.0.1", # Added for YAML config support
+]
+
+[project.scripts]
+clickmigrate = "clickmigrate.cli:app"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
