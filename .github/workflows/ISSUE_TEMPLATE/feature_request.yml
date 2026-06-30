@@ -1,0 +1,66 @@
+name: Feature Request
+description: Suggest a new feature or improvement for ClickMigrate.
+title: "[Feature]: "
+labels:
+  - enhancement
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your suggestion!
+
+        Before submitting, please check whether a similar feature request already exists.
+
+        We appreciate ideas that improve ClickMigrate's usability, reliability, or developer experience.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem are you trying to solve?
+      placeholder: |
+        I would like to...
+        Currently...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe how you would like this feature to work.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you considered any alternative solutions or workarounds?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of ClickMigrate does this relate to?
+      options:
+        - CLI
+        - Migration execution
+        - Migration generation
+        - Configuration
+        - ClickHouse compatibility
+        - Developer experience
+        - Documentation
+        - Performance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: |
+        Add any additional information, examples, mockups,
+        links to similar tools, or anything else that may help explain the idea.
