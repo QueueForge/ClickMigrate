@@ -7,7 +7,7 @@ from typing import List, Tuple
 from dataclasses import dataclass
 from clickmigrate.config import Config
 from clickmigrate.database import Database
-from clickmigrate.exceptions import ChecksumError, ClickMigrateError
+from clickmigrate.exceptions import ChecksumError
 
 
 @dataclass

@@ -2,7 +2,6 @@
 
 import typer
 from rich.console import Console
-from rich.table import Table
 from clickmigrate.config import load_config
 from clickmigrate.manager import MigrationManager
 from clickmigrate.exceptions import ClickMigrateError

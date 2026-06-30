@@ -6,7 +6,6 @@ import tomllib
 from dataclasses import dataclass
 from typing import Any, Dict
 import yaml
-from clickmigrate.exceptions import ConfigurationError
 
 
 @dataclass

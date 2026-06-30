@@ -2,7 +2,7 @@
 
 import clickhouse_connect
 from clickhouse_connect.driver.client import Client
-from typing import List, Dict, Any
+from typing import Dict
 from clickmigrate.config import Config
 from clickmigrate.exceptions import MigrationError
 
