@@ -4,6 +4,10 @@ A modern, simple, and reliable database migration framework for ClickHouse, insp
 
 ClickMigrate is designed to be lightweight and easy to understand. It avoids over-engineered abstractions, offering a straightforward CLI and a clean Python API for managing your ClickHouse schema evolutions.
 
+## About
+
+**ClickMigrate** is an open-source project developed and maintained by **QueueForge**. It is designed to provide a modern, simple, and reliable migration framework for ClickHouse databases. Learn more about QueueForge at [**https://queueforge.dev**](https://queueforge.dev?utm_source=README&utm_campaign=ClickMigrate).
+
 ---
 
 ## Features
