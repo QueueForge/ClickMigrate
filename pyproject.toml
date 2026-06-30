@@ -9,13 +9,45 @@ description = "A modern, simple database migration framework for ClickHouse."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "Ivo Theis", email = "ivo.theis@queueforge.dev" }]
+
+authors = [
+    { name = "Ivo Theis", email = "ivo.theis@queueforge.dev" }
+]
+
 dependencies = [
     "clickhouse-connect>=0.6.8",
     "typer>=0.9.0",
     "rich>=13.0.0",
-    "pyyaml>=6.0.1", # Added for YAML config support
+    "pyyaml>=6.0.1",
 ]
+
+keywords = [
+    "clickhouse",
+    "database",
+    "migration",
+    "migrations",
+    "sql",
+    "cli",
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://queueforge.dev"
+Repository = "https://github.com/queueforge/ClickMigrate"
+Issues = "https://github.com/queueforge/ClickMigrate/issues"
+Releases = "https://github.com/queueforge/ClickMigrate/releases"
 
 [project.scripts]
 clickmigrate = "clickmigrate.cli:app"
