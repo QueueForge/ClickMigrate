@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 from clickmigrate.config import Config
 from clickmigrate.exceptions import MigrationError
 
+
 class Database:
     """Handles ClickHouse connections and queries."""
 
@@ -41,7 +42,7 @@ class Database:
 
     def get_applied_migrations(self) -> Dict[str, str]:
         """Retrieves applied migrations and their checksums.
-        
+
         Returns:
             Dict mapping version to checksum.
         """
@@ -55,7 +56,7 @@ class Database:
         try:
             # Execute the actual migration
             self.client.command(sql)
-            
+
             # Record in history
             record_query = f"""
             INSERT INTO {self.config.migration_table} (version, name, checksum)

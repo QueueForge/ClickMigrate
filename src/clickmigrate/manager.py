@@ -9,14 +9,17 @@ from clickmigrate.config import Config
 from clickmigrate.database import Database
 from clickmigrate.exceptions import ChecksumError, ClickMigrateError
 
+
 @dataclass
 class Migration:
     """Represents a single SQL migration."""
+
     version: str
     name: str
     filepath: str
     content: str
     checksum: str
+
 
 class MigrationManager:
     """API for managing ClickHouse migrations."""
@@ -40,16 +43,16 @@ class MigrationManager:
                 parts = filename.replace(".sql", "").split("_", 1)
                 if len(parts) != 2:
                     continue
-                
+
                 version, name = parts
                 filepath = os.path.join(self.config.migration_directory, filename)
-                
+
                 with open(filepath, "r", encoding="utf-8") as f:
                     content = f.read()
-                
+
                 checksum = self._calculate_checksum(content)
                 migrations.append(Migration(version, name, filepath, content, checksum))
-                
+
         return migrations
 
     def validate(self) -> None:
@@ -74,16 +77,16 @@ class MigrationManager:
 
     def migrate(self, dry_run: bool = False) -> Tuple[int, float]:
         """Applies all pending migrations.
-        
+
         Returns:
             Tuple containing (number of migrations applied, execution time in seconds).
         """
         self.validate()
         applied_map = self.db.get_applied_migrations()
         local = self._get_local_migrations()
-        
+
         pending = [m for m in local if m.version not in applied_map]
-        
+
         if dry_run or not pending:
             return len(pending), 0.0
 
@@ -93,24 +96,24 @@ class MigrationManager:
                 version=migration.version,
                 name=migration.name,
                 checksum=migration.checksum,
-                sql=migration.content
+                sql=migration.content,
             )
-            
+
         return len(pending), time.time() - start_time
 
     def create_revision(self, message: str) -> str:
         """Creates a new empty migration file."""
         os.makedirs(self.config.migration_directory, exist_ok=True)
         local = self._get_local_migrations()
-        
+
         next_version = 1 if not local else int(local[-1].version) + 1
         version_str = f"{next_version:03d}"
-        
+
         safe_name = message.lower().replace(" ", "_").replace("-", "_")
         filename = f"{version_str}_{safe_name}.sql"
         filepath = os.path.join(self.config.migration_directory, filename)
-        
+
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(f"-- Migration: {message}\n-- Version: {version_str}\n\n")
-            
+
         return filepath

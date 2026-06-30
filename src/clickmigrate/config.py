@@ -8,9 +8,11 @@ from typing import Any, Dict
 import yaml
 from clickmigrate.exceptions import ConfigurationError
 
+
 @dataclass
 class Config:
     """Stores the ClickMigrate configuration."""
+
     host: str = "localhost"
     port: int = 8123
     database: str = "default"
@@ -18,6 +20,7 @@ class Config:
     password: str = ""
     migration_directory: str = "migrations"
     migration_table: str = "clickmigrate_history"
+
 
 def load_config() -> Config:
     """Loads configuration from environment variables or files."""
@@ -49,7 +52,7 @@ def load_config() -> Config:
         "CLICKMIGRATE_DIRECTORY": "migration_directory",
         "CLICKMIGRATE_TABLE": "migration_table",
     }
-    
+
     for env_var, key in env_mapping.items():
         if env_var in os.environ:
             val = os.environ[env_var]
