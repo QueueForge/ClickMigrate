@@ -56,6 +56,22 @@ class MigrationManager:
 
         return migrations
 
+    def get_pending_migrations(self) -> List[Migration]:
+        """Returns all local migrations that have not yet been applied.
+
+        Compares the locally available migration files with the migrations
+        recorded in the database and returns only those that are still pending.
+
+        Returns:
+            List[Migration]: A list of pending migration objects in version order.
+        """
+        applied_map = self.db.get_applied_migrations()
+        local = self._get_local_migrations()
+
+        pending = [m for m in local if m.version not in applied_map]
+
+        return pending
+
     def validate(self) -> None:
         """Validates that local checksums match applied checksums."""
         applied = self.db.get_applied_migrations()
@@ -83,10 +99,8 @@ class MigrationManager:
             Tuple containing (number of migrations applied, execution time in seconds).
         """
         self.validate()
-        applied_map = self.db.get_applied_migrations()
-        local = self._get_local_migrations()
 
-        pending = [m for m in local if m.version not in applied_map]
+        pending = self.get_pending_migrations()
 
         if dry_run or not pending:
             return len(pending), 0.0
