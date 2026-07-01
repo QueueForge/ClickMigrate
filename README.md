@@ -1,12 +1,12 @@
 # ClickMigrate
 
-A modern, simple, and reliable database migration framework for ClickHouse, inspired by Alembic.
+A modern, lightweight, and reliable database migration framework for ClickHouse, inspired by Alembic.
 
-ClickMigrate is designed to be lightweight and easy to understand. It avoids over-engineered abstractions, offering a straightforward CLI and a clean Python API for managing your ClickHouse schema evolutions.
+ClickMigrate provides a clean CLI and Python API for managing ClickHouse schema migrations without unnecessary complexity.
 
 ## About
 
-**ClickMigrate** is an open-source project developed and maintained by **QueueForge**. It is designed to provide a modern, simple, and reliable migration framework for ClickHouse databases. Learn more about QueueForge at [**https://queueforge.dev**](https://queueforge.dev?utm_source=README&utm_campaign=ClickMigrate).
+**ClickMigrate** is an open-source project developed and maintained by **QueueForge**. It is designed to provide a modern, simple, and reliable migration framework for ClickHouse databases. Learn more about QueueForge at https://queueforge.dev.
 
 ---
 
@@ -17,8 +17,10 @@ ClickMigrate is designed to be lightweight and easy to understand. It avoids ove
 - **State Management** – Automatically creates and manages a migration history table in ClickHouse.
 - **Checksum Validation** – Validates SHA-256 checksums to detect modified applied migrations.
 - **Flexible Configuration** – Supports `pyproject.toml`, JSON, YAML, or environment variables.
+- **Project Initialization** – `clickmigrate init` automatically creates a `pyproject.toml` configuration file with sensible defaults.
 - **Dry-Run Mode** – Preview which migrations will be applied without altering the database.
 - **Python API & CLI** – Use ClickMigrate from your terminal or programmatically in Python.
+- **Version Command** – Display the installed ClickMigrate version with `clickmigrate version`.
 
 ---
 
@@ -30,7 +32,7 @@ Install it using pip:
 
 ```bash
 pip install ClickMigrate
-```
+````
 
 ---
 
@@ -40,7 +42,7 @@ ClickMigrate provides an Alembic-like CLI for managing your migration workflow.
 
 ## 1. Initialize the Environment
 
-Create the migration directory (default: `migrations/`).
+Create the migration directory (default: `migrations/`) and generate a `pyproject.toml` configuration file with default settings if one does not already exist.
 
 ```bash
 clickmigrate init
@@ -69,7 +71,7 @@ Edit the generated file and add your ClickHouse SQL statements.
 
 ## 3. Check Status
 
-View how many migrations have been applied and how many are pending.
+View applied and pending migrations, including the version and name of each pending migration.
 
 ```bash
 clickmigrate status
@@ -79,7 +81,7 @@ clickmigrate status
 
 ## 4. Apply Migrations
 
-Run all pending migrations.
+Run all pending migrations. Progress and execution time are displayed for each migration.
 
 ```bash
 clickmigrate migrate
@@ -99,6 +101,16 @@ Verify that previously applied migration files have not been modified.
 
 ```bash
 clickmigrate validate
+```
+
+---
+
+## 6. Show Version
+
+Display the installed ClickMigrate version.
+
+```bash
+clickmigrate version
 ```
 
 ---
@@ -189,14 +201,16 @@ Each migration is executed only once and recorded in the migration history table
 
 # Commands
 
-| Command | Description |
-|---------|-------------|
-| `clickmigrate init` | Initialize a migration project |
-| `clickmigrate revision -m "message"` | Create a new migration |
-| `clickmigrate status` | Show migration status |
-| `clickmigrate migrate` | Apply pending migrations |
-| `clickmigrate migrate --dry-run` | Preview pending migrations |
-| `clickmigrate validate` | Validate migration checksums |
+| Command                              | Description                             |
+| ------------------------------------ | --------------------------------------- |
+| `clickmigrate init`                  | Initialize a migration project          |
+| `clickmigrate revision -m "message"` | Create a new migration                  |
+| `clickmigrate status`                | Show applied and pending migrations     |
+| `clickmigrate migrate`               | Apply pending migrations                |
+| `clickmigrate migrate --dry-run`     | Preview pending migrations              |
+| `clickmigrate validate`              | Validate migration checksums            |
+| `clickmigrate version`               | Show the installed ClickMigrate version |
+| `clickmigrate help`                  | Show the CLI help message               |
 
 ---
 
