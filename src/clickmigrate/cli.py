@@ -7,6 +7,7 @@ from rich.markup import escape
 from clickmigrate.config import load_config, create_config
 from clickmigrate.manager import MigrationManager
 from clickmigrate.exceptions import ClickMigrateError
+from importlib.metadata import version as get_version
 
 app = typer.Typer(help="ClickMigrate: A modern ClickHouse migration framework.")
 console = Console()
@@ -19,6 +20,13 @@ def get_manager() -> MigrationManager:
     except Exception as e:
         console.print(f"[bold red]Initialization Error:[/bold red] {e}")
         raise typer.Exit(code=1)
+
+
+@app.command()
+def version() -> None:
+    """Print the current ClickMigrate version."""
+
+    console.print(f"[green]ClickMigrate version: {get_version('clickmigrate')}[/green]")
 
 
 @app.command()
