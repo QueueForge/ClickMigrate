@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ClickMigrate"
-version = "1.0.0"
+version = "1.0.3"
 description = "A modern, simple database migration framework for ClickHouse."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -48,6 +48,7 @@ Homepage = "https://queueforge.dev"
 Repository = "https://github.com/queueforge/ClickMigrate"
 Issues = "https://github.com/queueforge/ClickMigrate/issues"
 Releases = "https://github.com/queueforge/ClickMigrate/releases"
+Changelog = "https://github.com/queueforge/ClickMigrate/blob/main/CHANGELOG.md"
 
 [project.scripts]
 clickmigrate = "clickmigrate.cli:app"
