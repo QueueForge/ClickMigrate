@@ -58,27 +58,39 @@ def migrate(
 ) -> None:
     """Apply all pending migrations."""
     console.print("\n[bold]ClickMigrate[/bold]\n")
+
     manager = get_manager()
 
     try:
-        applied_count, pending_count = manager.status()
-        if pending_count == 0:
+        manager.validate()
+
+        pending = manager.get_pending_migrations()
+        total = len(pending)
+
+        if total == 0:
             console.print("No pending migrations.\n")
             return
 
-        console.print(f"Applying [yellow]{pending_count}[/yellow] migrations...\n")
+        console.print(f"Applying [yellow]{total}[/yellow] migrations...\n")
 
         if dry_run:
+            console.print("[yellow]DRY RUN: no changes will be applied.\n")
+
+        elapsed = 0.0
+
+        for i, migration in enumerate(pending, start=1):
+            duration = manager.migrate(migration, dry_run=dry_run)
+            elapsed += duration
+
             console.print(
-                "[yellow]DRY RUN: No changes will be made to the database.[/yellow]\n"
+                f"[green]SUCCESS[/green] {migration.version}_{migration.name} "
+                f"({i}/{total}) in {duration:.2f}s"
             )
 
-        applied, duration = manager.migrate(dry_run=dry_run)
-
-        console.print("\n[bold green]SUCCESS[/bold green]\n")
-        console.print(f"Applied migrations : {applied}")
-        console.print(f"Pending migrations : {pending_count - applied}")
-        console.print(f"Execution time     : {duration:.2f} seconds\n")
+        console.print("\n[bold green]DONE[/bold green]\n")
+        console.print(f"Applied migrations : {total}")
+        console.print(f"Pending migrations : 0")
+        console.print(f"Execution time     : {elapsed:.2f}s\n")
 
     except ClickMigrateError as e:
         console.print(f"\n[bold red]FAILED[/bold red]\n{e}")

@@ -92,29 +92,25 @@ class MigrationManager:
         pending_count = sum(1 for m in local if m.version not in applied)
         return len(applied), pending_count
 
-    def migrate(self, dry_run: bool = False) -> Tuple[int, float]:
-        """Applies all pending migrations.
+    def migrate(self, migration: Migration, dry_run: bool = False) -> float:
+        """Applies one migration.
 
         Returns:
-            Tuple containing (number of migrations applied, execution time in seconds).
+            float: Execution time in seconds (0.0 if dry_run).
         """
-        self.validate()
+        if dry_run:
+            return 0.0
 
-        pending = self.get_pending_migrations()
+        start = time.perf_counter()
 
-        if dry_run or not pending:
-            return len(pending), 0.0
+        self.db.apply_migration(
+            version=migration.version,
+            name=migration.name,
+            checksum=migration.checksum,
+            sql=migration.content,
+        )
 
-        start_time = time.time()
-        for migration in pending:
-            self.db.apply_migration(
-                version=migration.version,
-                name=migration.name,
-                checksum=migration.checksum,
-                sql=migration.content,
-            )
-
-        return len(pending), time.time() - start_time
+        return time.perf_counter() - start
 
     def create_revision(self, message: str) -> str:
         """Creates a new empty migration file."""
