@@ -1,6 +1,7 @@
 """Core migration management logic."""
 
 import os
+import re
 import hashlib
 import time
 from typing import List, Tuple
@@ -109,7 +110,7 @@ class MigrationManager:
         next_version = 1 if not local else int(local[-1].version) + 1
         version_str = f"{next_version:03d}"
 
-        safe_name = message.lower().replace(" ", "_").replace("-", "_")
+        safe_name = re.sub(r"[^a-zA-Z0-9_]", "", message.lower()).replace(" ", "_").replace("-", "_")
         filename = f"{version_str}_{safe_name}.sql"
         filepath = os.path.join(self.config.migration_directory, filename)
 
