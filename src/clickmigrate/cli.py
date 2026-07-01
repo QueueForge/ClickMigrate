@@ -2,6 +2,7 @@
 
 import os
 import typer
+from typer.main import get_command
 from rich.console import Console
 from rich.markup import escape
 from clickmigrate.config import load_config, create_config
@@ -20,6 +21,13 @@ def get_manager() -> MigrationManager:
     except Exception as e:
         console.print(f"[bold red]Initialization Error:[/bold red] {e}")
         raise typer.Exit(code=1)
+
+
+@app.command(hidden=True)
+def help() -> None:
+    """Show the help message."""
+    command = get_command(app)
+    print(command.get_help(command.make_context("clickmigrate", [])))
 
 
 @app.command()
