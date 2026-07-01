@@ -93,6 +93,11 @@ def status() -> None:
     console.print(f"Applied migrations : [green]{applied}[/green]")
     console.print(f"Pending migrations : [yellow]{pending}[/yellow]")
 
+    pending_migrations = manager.get_pending_migrations()
+
+    for m in pending_migrations:
+        console.print(f"- Version: {m.version}; Name: {m.name}")
+
 
 @app.command()
 def validate() -> None:
