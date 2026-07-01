@@ -3,9 +3,11 @@
 import os
 import json
 import tomllib
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from typing import Any, Dict
+from pathlib import Path
 import yaml
+import tomlkit
 
 
 @dataclass
@@ -19,6 +21,39 @@ class Config:
     password: str = ""
     migration_directory: str = "migrations"
     migration_table: str = "clickmigrate_history"
+
+
+def create_config() -> None:
+    """Creates a default ClickMigrate configuration in pyproject.toml."""
+
+    pyproject = Path("pyproject.toml")
+
+    if pyproject.exists():
+        text = pyproject.read_text(encoding="utf-8")
+        data = tomllib.loads(text)
+
+        if "tool" in data and "clickmigrate" in data["tool"]:
+            raise ValueError(
+                "pyproject.toml already contains a [tool.clickmigrate] section."
+            )
+
+        doc = tomlkit.parse(text)
+    else:
+        doc = tomlkit.document()
+
+    if "tool" not in doc:
+        doc["tool"] = tomlkit.table()
+
+    clickmigrate = tomlkit.table()
+
+    defaults = Config()
+
+    for field in fields(Config):
+        clickmigrate[field.name] = getattr(defaults, field.name)
+
+    doc["tool"]["clickmigrate"] = clickmigrate
+
+    pyproject.write_text(tomlkit.dumps(doc), encoding="utf-8")
 
 
 def load_config() -> Config:

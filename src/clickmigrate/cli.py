@@ -1,8 +1,10 @@
 """Command Line Interface for ClickMigrate."""
 
+import os
 import typer
 from rich.console import Console
-from clickmigrate.config import load_config
+from rich.markup import escape
+from clickmigrate.config import load_config, create_config
 from clickmigrate.manager import MigrationManager
 from clickmigrate.exceptions import ClickMigrateError
 
@@ -22,10 +24,17 @@ def get_manager() -> MigrationManager:
 @app.command()
 def init() -> None:
     """Initialize a new ClickMigrate environment."""
+
+    try:
+        create_config()
+        console.print("[green]Added ClickMigerate config to pyproject.toml[/green]")
+    except Exception as e:
+        console.print(f"[red]{escape(str(e))}[/red]")
+
     config = load_config()
-    import os
 
     os.makedirs(config.migration_directory, exist_ok=True)
+
     console.print(
         f"[green]Initialized ClickMigrate in ./{config.migration_directory}/[/green]"
     )
