@@ -89,7 +89,7 @@ def migrate(
 
         console.print("\n[bold green]DONE[/bold green]\n")
         console.print(f"Applied migrations : {total}")
-        console.print(f"Pending migrations : 0")
+        console.print("Pending migrations : 0")
         console.print(f"Execution time     : {elapsed:.2f}s\n")
 
     except ClickMigrateError as e:
