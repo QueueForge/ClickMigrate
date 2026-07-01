@@ -2,6 +2,23 @@
 
 ---
 
+## **v1.0.8 - 2026-07-01**
+
+### Features
+
+* Running `clickmigrate init` now creates a `pyproject.toml` file if it does not exist, or populates it with the default configuration.
+* `clickmigrate status` now displays the version and name of pending migrations.
+* `clickmigrate migrate` now displays additional information while applying migrations.
+* Added the `clickmigrate version` command to display the installed ClickMigrate version.
+* Added support for the `help` command as an alternative to `--help`.
+
+### Refactored
+
+* Refactored `manager.validate()` to use the newly implemented `get_pending_migrations()` method.
+* Refactored `manager.migrate()` to apply a single migration passed as an argument.
+
+---
+
 ## **v1.0.3 – 2026-07-01**
 
 ### Fixed
